@@ -1,0 +1,33 @@
+{
+  "name": "lru-cache",
+  "version": "0.0.1",
+  "description": "A least-recently-used cache",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaelespinoza/lru-cache.git"
+  },
+  "keywords": [],
+  "author": "Rafael Espinoza <rafael@rafaelespinoza.com> (www.rafaelespinoza.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafaelespinoza/lru-cache/issues"
+  },
+  "homepage": "https://github.com/rafaelespinoza/lru-cache#readme",
+  "private": true,
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "cz-conventional-changelog": "^1.2.0"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
