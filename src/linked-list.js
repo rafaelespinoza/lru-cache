@@ -73,8 +73,11 @@ const moveToFrontOfList = (list, node) => {
   if (node === list.head) { return; }
   if (node === list.tail) {
     popFromList(list);
-    list.size += 1; // need to undo this side effect
+    list.size += 1; // undo this side effect
   }
+
+  const oldPrev = node.prev;
+  const oldNext = node.next;
 
   node.prev = null;
   node.next = null;
@@ -83,6 +86,11 @@ const moveToFrontOfList = (list, node) => {
     list.head = node;
     list.tail = node;
   } else {
+    // untangle references from before the swap
+    oldPrev.next = oldNext;
+    if (oldNext) { oldNext.prev = oldPrev; }
+
+    // set new head
     list.head.prev = node;
     node.next = list.head;
     list.head = node;
