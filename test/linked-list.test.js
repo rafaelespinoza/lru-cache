@@ -101,3 +101,43 @@ test('#popFromList: when list size > 0', t => {
   t.is(list.tail, null);
   t.is(quxxed, qux, 'popped shallow-equals first added node');
 });
+
+test('#moveToFrontOfList: handles a position swap', t => {
+  const list = createList();
+  const ack = createNode('ack', 1);
+  const bif = createNode('bif', 2);
+  const con = createNode('con', 3);
+  const limit = 3;
+
+  // starts out:
+  // c -> b -> a -> null
+  unshiftToList(list, ack, limit);
+  unshiftToList(list, bif, limit);
+  unshiftToList(list, con, limit);
+  t.is(list.size, 3);
+  t.is(list.head, con, 'references most recently updated node');
+  t.is(list.tail, ack, 'references least recently updated node');
+
+  // swapping places in list
+  // b -> c -> a -> null
+  moveToFrontOfList(list, bif);
+  t.is(list.size, 3, 'size remains the same');
+
+  // check head
+  const head = list.head;
+  t.is(head.prev, null);
+  t.is(head.key, 'bif');
+  t.is(head.next.key, 'con');
+
+  // check middle
+  const mid = list.head.next;
+  t.is(mid.prev.key, 'bif');
+  t.is(mid.key, 'con');
+  t.is(mid.next.key, 'ack');
+
+  // check tail
+  const tail = list.tail;
+  t.is(tail.prev.key, 'con');
+  t.is(tail.key, 'ack');
+  t.is(tail.next, null);
+});
