@@ -53,9 +53,7 @@ LRUCache.prototype.cache = function(key, val) {
 };
 
 LRUCache.prototype.delete = function(key) {
-  if (key === 'delete') { return false; }
-  delVal(this, key);
-  return true;
+  return delVal(this, key);
 };
 
 if (typeof module !== 'undefined') {

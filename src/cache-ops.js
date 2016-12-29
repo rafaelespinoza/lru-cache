@@ -51,23 +51,24 @@ const delVal = (cacheObj, key) => {
     const node = map[key];
     removeFromList(list, node);
 
-    unsetProperty(cacheObj, key);
     cacheObj.map = mapList(list);
   }
 
-  delete cacheObj[key];
+  return delete cacheObj[key];
 };
 
 const resetCapacity = (cacheObj, newCapacity) => {
-  const { capacity, list } = cacheObj;
+  const { capacity, list, size } = cacheObj;
 
   const oldCapacity = capacity;
   const diff = oldCapacity - newCapacity;
 
   if (diff > 0) {
-    for (let i = 0; i < diff - 1; i += 1) {
+    let i = size;
+
+    while (i > newCapacity) {
       const popped = trim(cacheObj);
-      delVal(cacheObj, popped.key);
+      i -= 1;
     }
 
     cacheObj.map = mapList(list);
@@ -82,14 +83,5 @@ function setProperty(cacheObj, key) {
     set: newVal => setVal(cacheObj, key, newVal),
     enumerable: true,
     configurable: true
-  });
-}
-
-function unsetProperty(cacheObj, key) {
-  Object.defineProperty(cacheObj, key, {
-    enumerable: false,
-    configurable: false,
-    writable: false,
-    value: undefined
   });
 }
